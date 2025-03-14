@@ -1,15 +1,39 @@
 import React from 'react'
+import { EstacaoClimatica } from './EstacaoClimatica'
+
 class App extends React.Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      latitude: null,
-      longitude: null,
-      estacao: null,
-      data: null,
-      icone: null,
-      mensagemDeErro: null
-    }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     latitude: null,
+  //     longitude: null,
+  //     estacao: null,
+  //     data: null,
+  //     icone: null,
+  //     mensagemDeErro: null
+  //   }
+  //   console.log('constructor')
+  // }
+  state = {
+    latitude: null,
+    longitude: null,
+    estacao: null,
+    data: null,
+    icone: null,
+    mensagemDeErro: null
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount')
+    this.obterLocalizacao()
+  }
+
+  componentDidUpdate(){
+    console.log('componenteDidUpdate')
+  }
+
+  componentWillUnmount(){
+    console.log('componentWillUnmount')
   }
 
   obterEstacao = (data, latitude) => {
@@ -66,45 +90,19 @@ class App extends React.Component{
     )
   }
   render(){
+    console.log('render')
     return(
-      <div className='container mt-2'>
+      <div id="app" className='container mt-2'>
         <div className="row justify-content-center">
           <div className="col-md-8">
-            <div className="card">
-              <div className="card-body">
-
-                <div 
-                  className="d-flex align-items-center border rounded mb-2"
-                  style={{height: '6rem'}}>
-                    <i className={`fas fa-5x fa-${this.state.icone}`}></i>
-                    {/* p.w-75.ms-3.text-center.fs-1 */}
-                    <p className="w-75 ms-3 text-center fs-1">{this.state.estacao}</p>
-
-                </div>
-
-                <div>
-                  <p className='text-center'>
-                    {/* renderização condicional */}
-                    {
-                      this.state.latitude ?
-                        `Coordenadas: ${this.state.latitude},${this.state.longitude}. Data: ${this.state.data}.`
-                      :
-                      this.state.mensagemDeErro ?
-                        `${this.state.mensagemDeErro}`
-                      :  
-                        `Clique no botão para saber a sua estação climática`
-                    }
-                  </p>
-                </div>
-                
-                <button 
-                  onClick={this.obterLocalizacao}
-                  className='btn btn-outline-primary w-100 mt-2'>
-                    Qual a minha estação?
-                </button>
-
-              </div>
-            </div>
+            <EstacaoClimatica 
+              icone={this.state.icone}
+              estacao={this.state.estacao}
+              latitude={this.state.latitude}
+              longitude={this.state.longitude}
+              data={this.state.data}
+              mensagemDeErro={this.state.mensagemDeErro}
+              obterLocalizacao={this.obterLocalizacao}/>
           </div>          
         </div>
       </div>
