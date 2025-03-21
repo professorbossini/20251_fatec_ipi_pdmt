@@ -2,6 +2,26 @@
 import React, { Component } from 'react'
 
 export class EstacaoClimatica extends Component {
+
+    timer = null
+
+    state = {
+        data: null
+    }
+
+    componentDidMount(){
+        this.timer = setInterval(() => {
+            console.log('timer executou...')
+            this.setState({
+                data: new Date().toLocaleTimeString()
+            })
+        }, 1000)
+        console.log(this.timer)
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.timer)
+    }
     render() {
         return (
             <div className="card">
@@ -21,18 +41,15 @@ export class EstacaoClimatica extends Component {
                             {/* renderização condicional */}
                             {
                                 this.props.latitude ?
-                                    `Coordenadas: ${this.props.latitude},${this.props.longitude}. Data: ${this.props.data}.`
+                                    `Coordenadas: ${this.props.latitude},${this.props.longitude}. Data: ${this.state.data}.`
                                     :
-                                    this.props.mensagemDeErro ?
-                                        `${this.props.mensagemDeErro}`
-                                        :
-                                        `Clique no botão para saber a sua estação climática`
+                                    `Clique no botão para saber a sua estação climática`
                             }
                         </p>
                     </div>
 
                     <button
-                        onClick={this.obterLocalizacao}
+                        onClick={this.props.obterLocalizacao}
                         className='btn btn-outline-primary w-100 mt-2'>
                         Qual a minha estação?
                     </button>
