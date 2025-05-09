@@ -1,9 +1,15 @@
 // rafce
 import React from 'react'
 import Imagem from './Imagem'
-const ListaImagens = ({photos}) => {
+const ListaImagens = ({photos, imgStyle}) => {
   return (
-    photos.map((photo, key) => (<Imagem key={key} src={photo.src.small} alt={photo.alt}/>))
+    photos.map((photo, key) => (
+      <Imagem 
+        imgStyle={imgStyle} 
+        key={key} 
+        src={photo.src.small} 
+        alt={photo.alt}/>
+    ))
   )
 }
 
